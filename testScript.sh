@@ -1,6 +1,6 @@
 #!/bin/bash
 
-while getopts erh option1
+while getopts er option1
 do
 case "${option1}"
 in
@@ -42,9 +42,7 @@ r)
 
 	arrayLength=${#currencyArray[@]}
 	data="http://free.currencyconverterapi.com/api/v5/convert?q="
-	echo "I------------------------I"
-	echo "I CURRENCY || VALUE($to) I"
-	echo "I------------------------I"
+	echo "CURRENCY || VALUE($to)"
 
 	for (( i=0; i<$arrayLength; i++ ))
 	do
@@ -55,19 +53,16 @@ r)
 		rate=${data#*:}
 		rate=${rate::-1}
 
-		echo "    ${currencyArray[$i]}    || $rate  "
-		echo "I------------------------I"
+		echo "   ${currencyArray[$i]}   || $rate "
 		data="http://free.currencyconverterapi.com/api/v5/convert?q="
 	done
 
 ;;
-h)
-	echo ""
-	echo "I---------------------------------------------------------------------------HELP-----------------------------------------------------------------------------I"
-	echo "I Exchanging an amount of money from a currency to another currency. --> -e -f CURRENCYFROM(ex.: USD) -t CURRENCYTO(ex.: HUF) -a AMOUNT                      I" 
-	echo "I Listing out the exchange rate(s) of the given currency/currencies to another currency. --> -r -f CURRENCIESFROM(ex.: USD,EUR,RUB) -t CURRENCYTO(ex.: HUF)  I"
-	echo "I---------------------------------------------------------------------------HELP-----------------------------------------------------------------------------I"
-	echo ""
-;;
+
 esac
 done
+
+
+
+currencyArray=($(echo "$list" | tr ',' '\n'))
+
